@@ -19,14 +19,16 @@ class geoip inherits geoip::params {
       cron { 'geoipupdate':
         ensure  => present,
         command => '/usr/bin/geoipupdate',
-        minute  => '*/5',
-        user    => root
+        user    => root,
+        minute  => 0,
+        hour    => 0,
+        weekday => 7
       }
 
     }
 
   } else {
-    notify{ 'Geoip module not configured, credentials missings':  }
+    fail{ 'Geoip module not configured, credentials missings':  }
   }
 
 }
