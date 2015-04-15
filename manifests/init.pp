@@ -28,7 +28,7 @@ class geoip inherits geoip::params {
     }
 
   } else {
-    fail{ 'Geoip module not configured, credentials missings':  }
+    fail('Geoip module not configured, credentials missings')
   }
 
 }
