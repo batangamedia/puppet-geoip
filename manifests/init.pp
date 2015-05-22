@@ -5,7 +5,11 @@
 class geoip inherits geoip::params {
 
   package { $geoip::params::package: ensure => installed }
-  
+
+  if ( $geoip::params::extra_package ) {
+  	package { $geoip::params::extra_package: ensure => installed }  
+  }
+
   if ($geoip::params::userid and $geoip::params::licensekey) {
     class {'geoip::conf':
       require => Package[$geoip::params::package]
