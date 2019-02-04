@@ -10,7 +10,7 @@ class geoip inherits geoip::params {
   	package { $geoip::params::extra_package: ensure => installed }  
   }
   
-  if ( $facts['os']['family'] == 'Debian' && $facts['os']['distro']['release']['major'] == 9 ) {
+  if ( $facts['os']['family'] == 'Debian' and $facts['os']['distro']['release']['major'] == 9 ) {
     package{'geoipupdate':
       ensure => installed
     }
