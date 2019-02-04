@@ -14,13 +14,17 @@ class geoip inherits geoip::params {
     package{'geoipupdate':
       ensure => installed
     }
+    # Debian 9 changes default path to /var/lib/GeoIP
+    $real_save_path = '/var/lib/GeoIP'
+  } else {
+    $real_save_path = $geoip::params::save_path
   }
   if ($geoip::params::userid and $geoip::params::licensekey) {
     class {'geoip::conf':
       require => Package[$geoip::params::package]
     } -> exec {'run geoipupdate':
       command => '/usr/bin/geoipupdate',
-      unless  => '/usr/bin/test -f /usr/share/GeoIP/GeoIPCity.dat'
+      unless  => "/usr/bin/test -f ${real_save_path}/GeoIPCity.dat"
     }
 
     if ($geoip::params::update_cron) {
